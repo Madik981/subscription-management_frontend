@@ -135,6 +135,15 @@ export function AppProvider({ children }) {
     notify("Статус пользователя обновлен");
   }
 
+  async function updateUserPlan(userID, planID) {
+    await request("accounts", `/users/${userID}`, {
+      method: "PATCH",
+      body: { plan_id: Number(planID) },
+    });
+    await refresh();
+    notify("Тариф пользователя обновлен");
+  }
+
   async function deleteUser(id) {
     await request("accounts", `/users/${id}`, { method: "DELETE" });
     await refresh();
@@ -224,6 +233,7 @@ export function AppProvider({ children }) {
       deletePlan,
       createUser,
       toggleUser,
+      updateUserPlan,
       deleteUser,
       createBilling,
       payBilling,

@@ -2,7 +2,7 @@
 
 import { dateTime, money } from "../lib/format";
 
-export function UsersTable({ users, compact = false, planName, onToggle, onDelete }) {
+export function UsersTable({ users, compact = false, plans = [], planName, onToggle, onPlanChange, onDelete }) {
   return (
     <div className="table-wrap">
       <table>
@@ -22,7 +22,33 @@ export function UsersTable({ users, compact = false, planName, onToggle, onDelet
               <td>#{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{planName(user.plan_id)}</td>
+              <td>
+                {compact ? (
+                  planName(user.plan_id)
+                ) : (
+                  <form
+                    className="actions row-actions"
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      onPlanChange(user.id, event.currentTarget.elements.plan_id.value);
+                    }}
+                  >
+                    <select className="table-select" name="plan_id" defaultValue={user.plan_id || ""} required>
+                      <option value="" disabled>
+                        Выберите тариф
+                      </option>
+                      {plans.map((plan) => (
+                        <option key={plan.id} value={plan.id}>
+                          {plan.name} · {money(plan.price, plan.currency)}
+                        </option>
+                      ))}
+                    </select>
+                    <button className="btn small secondary" type="submit" disabled={!plans.length}>
+                      Сохранить
+                    </button>
+                  </form>
+                )}
+              </td>
               <td>
                 <span className={`status ${user.is_active ? "active" : "inactive"}`}>
                   {user.is_active ? "active" : "inactive"}

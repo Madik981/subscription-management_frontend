@@ -418,6 +418,13 @@ textarea:focus {
   flex-wrap: nowrap;
 }
 
+.table-select {
+  width: 220px;
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
 .btn {
   min-height: 42px;
   display: inline-flex;

@@ -7,7 +7,7 @@ import { useApp } from "../../components/AppProvider";
 import { cleanNumber, money } from "../../lib/format";
 
 export default function UsersPage() {
-  const { createUser, deleteUser, notify, planName, plans, toggleUser, users } = useApp();
+  const { createUser, deleteUser, notify, planName, plans, toggleUser, updateUserPlan, users } = useApp();
 
   async function handleCreate(event) {
     event.preventDefault();
@@ -66,7 +66,14 @@ export default function UsersPage() {
           </form>
         </div>
         {users.length ? (
-          <UsersTable users={users} planName={planName} onToggle={toggleUser} onDelete={deleteUser} />
+          <UsersTable
+            users={users}
+            plans={plans}
+            planName={planName}
+            onToggle={toggleUser}
+            onPlanChange={updateUserPlan}
+            onDelete={deleteUser}
+          />
         ) : (
           <div className="empty">Пользователи пока не созданы</div>
         )}
