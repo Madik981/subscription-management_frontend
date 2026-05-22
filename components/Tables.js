@@ -19,10 +19,10 @@ export function UsersTable({ users, compact = false, plans = [], planName, onTog
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td>#{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
+              <td data-label="ID">#{user.id}</td>
+              <td data-label="Имя">{user.name}</td>
+              <td data-label="Email">{user.email}</td>
+              <td data-label="Тариф">
                 {compact ? (
                   planName(user.plan_id)
                 ) : (
@@ -49,13 +49,13 @@ export function UsersTable({ users, compact = false, plans = [], planName, onTog
                   </form>
                 )}
               </td>
-              <td>
+              <td data-label="Статус">
                 <span className={`status ${user.is_active ? "active" : "inactive"}`}>
                   {user.is_active ? "active" : "inactive"}
                 </span>
               </td>
               {!compact ? (
-                <td>
+                <td data-label="Действие">
                   <div className="actions row-actions">
                     <button className="btn small secondary" type="button" onClick={() => onToggle(user)}>
                       {user.is_active ? "Отключить" : "Активировать"}
@@ -92,16 +92,16 @@ export function BillingsTable({ billings, compact = false, planName, onPay, onFa
         <tbody>
           {billings.map((billing) => (
             <tr key={billing.id}>
-              <td>#{billing.id}</td>
-              <td>#{billing.user_id}</td>
-              <td>{billing.plan?.name || planName(billing.plan_id)}</td>
-              <td>{money(billing.amount, billing.plan?.currency || "USD")}</td>
-              <td>{dateTime(billing.due_date)}</td>
-              <td>
+              <td data-label="ID">#{billing.id}</td>
+              <td data-label="Пользователь">#{billing.user_id}</td>
+              <td data-label="Тариф">{billing.plan?.name || planName(billing.plan_id)}</td>
+              <td data-label="Сумма">{money(billing.amount, billing.plan?.currency || "USD")}</td>
+              <td data-label="Срок">{dateTime(billing.due_date)}</td>
+              <td data-label="Статус">
                 <span className={`status ${billing.status}`}>{billing.status}</span>
               </td>
               {!compact ? (
-                <td>
+                <td data-label="Действие">
                   <div className="actions row-actions">
                     {billing.status === "pending" ? (
                       <>
